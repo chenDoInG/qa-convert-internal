@@ -6,27 +6,82 @@
 
     <groupId>com.liepin.qa</groupId>
     <artifactId>qa-convert-internal</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
     <build>
         <plugins>
+            <!--plugin to package app-->
+            <!--<plugin>-->
+                <!--<groupId>sh.tak.appbundler</groupId>-->
+                <!--<artifactId>appbundle-maven-plugin</artifactId>-->
+                <!--<version>1.0.4</version>-->
+                <!--<configuration>-->
+                    <!--<mainClass>com.liepin.qa.HostManager</mainClass>-->
+                    <!--<jrePath>/Library/Java/JavaVirtualMachines/jdk1.7.0_75.jdk</jrePath>-->
+                    <!--<iconFile>qa-convert-internal.icns</iconFile>-->
+                <!--</configuration>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<phase>package</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>bundle</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
+            <!--end of plugin to package app-->
+
+            <!--plugin to package exe-->
             <plugin>
-                <groupId>sh.tak.appbundler</groupId>
-                <artifactId>appbundle-maven-plugin</artifactId>
-                <version>1.0.4</version>
-                <configuration>
-                    <mainClass>com.liepin.qa.HostManager</mainClass>
-                    <iconFile>qa-convert-internal.icns</iconFile>
-                </configuration>
+                <groupId>com.akathist.maven.plugins.launch4j</groupId>
+                <artifactId>launch4j-maven-plugin</artifactId>
                 <executions>
                     <execution>
+                        <id>l4j-gui</id>
                         <phase>package</phase>
-                        <goals>
-                            <goal>bundle</goal>
-                        </goals>
+                        <goals><goal>launch4j</goal></goals>
+                        <configuration>
+                            <headerType>gui</headerType>
+                            <outfile>target/qa-convert-internal.exe</outfile>
+                            <jar>target/qa-convert-internal-1.0.jar</jar>
+                            <errTitle>qa-convert-internal</errTitle>
+                            <classPath>
+                                <mainClass>com.liepin.qa.HostManager</mainClass>
+                            </classPath>
+                            <jre>
+                                <minVersion>1.8.0</minVersion>
+                            </jre>
+                            <versionInfo>
+                                <fileVersion>1.2.3.4</fileVersion>
+                                <txtFileVersion>txt file version?</txtFileVersion>
+                                <fileDescription>a description</fileDescription>
+                                <copyright>my copyright</copyright>
+                                <productVersion>4.3.2.1</productVersion>
+                                <txtProductVersion>txt product version</txtProductVersion>
+                                <productName>qa-convert-internal</productName>
+                                <internalName>qa-convert-internal</internalName>
+                                <originalFilename>qa-convert-internal.exe</originalFilename>
+                            </versionInfo>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>assembly</id>
+                        <phase>package</phase>
+                        <goals><goal>attached</goal></goals>
+                        <configuration>
+                            <descriptors>
+                                <descriptor>assembly.xml</descriptor>
+                            </descriptors>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--end of plugin to package exe-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
