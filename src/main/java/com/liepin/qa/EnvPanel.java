@@ -5,7 +5,7 @@ import javax.swing.*;
 public class EnvPanel extends JPanel {
 	public EnvPanel() {
 		this.setSize(110,25);
-		textField = new JTextField();
+		JTextField textField = new JTextField();
 		add(textField);
 		textField.setText("测试加载");
 		textField.setSize(100, 25);
@@ -13,5 +13,4 @@ public class EnvPanel extends JPanel {
 	}
 
 	private static final long serialVersionUID = -8013387382227176014L;
-	private JTextField textField;
 }
